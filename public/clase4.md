@@ -10,6 +10,8 @@
 
 ¿Les resultó complejo de aplicar?
 
+_tell don't ask_
+
 --
 
 ### ¿Y el `if` ya pasó de moda?
@@ -42,6 +44,25 @@
 
 ### ¿Cómo se hace?
 
+```ts
+export const biblioteca = {
+  libros: [] as Libro[],
+
+  tieneAlgunoDe(autor: string) {
+    return any((it) => it.autor == autor, this.libros);
+  },
+
+  agregarLibro(libro: Libro) {
+    this.libros.push(libro);
+  },
+};
+
+import { biblioteca } from './biblioteca';
+
+biblioteca.agregarLibro(new Libro(...));
+biblioteca.tieneAlgunoDe('Cortázar');
+```
+
 --
 
 ### ¿En qué casos lo usaría?
@@ -53,6 +74,34 @@
 
 ### Cómo quedaría el Strategy
 
+```ts
+interface CalidadVideo {
+  tamanio(duracion: number): number;
+}
+
+export const hd720: CalidadVideo = {
+  tamanio(duracion: number) {
+    return duracion * 2;
+  },
+};
+
+//
+
+import { hd720 } from './calidades';
+
+const videoEnJujuy = new Video(120, hd720);
+
+//
+
+class Video {
+  espacioQueOcupa() {
+    return this.calidad.tamanio(this.duracion);
+  }
+}
+```
+
+Este "patrón" se llama **Singleton**.
+
 ===
 
 ## Otros comentarios sobre el ejercicio
@@ -61,14 +110,14 @@
 
 ### Una pavada
 
-> para los videos de HD 1080p el tamaño es el doble de los HD 720p + 300 bytes fijos
+> ...para los videos de HD 1080p el tamaño es el doble de los HD 720p + 300 bytes fijos.
 
 Se puede escribir así, para no repetir lo que ya está en la otra clase:
 
 ```ts
 class HD1080p extends HD720p {
   espacioQueOcupa(duracion: number): number {
-    return super(duracion) * 2 + 300;
+    return super.espacioQueOcupa(duracion) * 2 + 300;
   }
 }
 ```
@@ -100,6 +149,16 @@ class HD720p implements CalidadVideo {
 ### Setters y getters
 
 No hacen falta.
+
+```ts
+class Perro {
+  nombre: String;
+}
+
+//
+
+const juanito = new Perro()
+juanito.nombre = "Juanito"
 
 ===
 
@@ -137,3 +196,4 @@ Apliquen la misma idea que en el **Strategy**: en vez de hacer un `if`, creo otr
 </div>
 
 <img width="100px" src="img/logo.png">
+```
