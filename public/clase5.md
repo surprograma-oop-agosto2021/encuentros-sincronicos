@@ -38,6 +38,36 @@ _El conocimiento debe estar en un solo lugar._
 
 --
 
+```ts
+abstract class Planta {
+  daSemillas(): boolean {
+    return this.esFuerte() || this.condicionEspecifica();
+  }
+
+  abstract condicionEspecifica(): boolean;
+}
+
+class Menta extends Planta {
+  override condicionEspecifica(): boolean {
+    return this.altura > 0.4;
+  }
+}
+
+class Soja extends Planta {
+  override daSemillas(): boolean {
+    if (this.esTransgenica) {
+      return false;
+    }
+
+    return (
+      super.daSemillas() || (this.anioObtencionSemilla > 2007 && this.altura > 1)
+    );
+  }
+}
+```
+
+--
+
 ### Acoplamiento
 
 _¿Cuánto conoce un componente sobre otro?_
@@ -51,7 +81,7 @@ _¿Cuánto conoce un componente sobre otro?_
 
 _¿Cuántas responsabilidades tiene un componente?_
 
-- `Soja transgénica` -> con una sola clase se está queriendo representar a dos tipos de `Soja`, usando un booleano para diferenciarlas.
+- `Soja transgénica` -> con una sola clase se está queriendo representar a dos tipos de `Soja`.
 - `Planta.parcelaTieneComplicaciones` -> este método no tiene que ver con las responsabilidades de la `Planta`, debería estar en la `Parcela`.
 - `Agricultora.plantarEstrategicamente` -> este método hace dos cosas: busca la parcela y luego la planta. Se podría delegar la primera en otro método.
 
