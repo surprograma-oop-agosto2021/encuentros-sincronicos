@@ -1,5 +1,6 @@
 {
   "imports": {
+    "plantuml-encoder": "./plantuml-encoder.js",
     "reveal.js": "./revealjs.js",
     "reveal.js/dist/reveal.css": "./revealjs/dist/reveal.css",
     "reveal.js/dist/theme/beige.css": "./revealjs/dist/theme/beige.css",
